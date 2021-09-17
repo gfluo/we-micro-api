@@ -13,5 +13,6 @@ app.use(cors());
 app.use(bodyParser());
 app.use(router.routes());
 app.use(router.allowedMethods());
-app.listen(config.listenPort)
-console.log(moment().format('YYYY-MM-DD HH:mm:ss'), `: server is running at port ${config.listenPort}`)
+app.listen(config.listenPort, () => {
+   console.log(moment().format('YYYY-MM-DD HH:mm:ss'), `: server is running at port ${config.listenPort}`)
+})
