@@ -23,6 +23,7 @@
     "koa2-cors": "^2.0.6",
     "moment": "^2.29.1",
     "mysql2": "^2.3.0",
+    "request-validate": "^1.0.9",
     "sequelize": "^6.6.5"
   }
 }
