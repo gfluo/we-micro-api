@@ -12,7 +12,8 @@ const User = sequelize.define('user', {
     openId: {
         field: 'open_id',
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     sex: {
         field: 'sex',
@@ -39,6 +40,8 @@ const User = sequelize.define('user', {
         type: Sequelize.STRING,
         allowNull: true,
     },
+}, {
+    timestamps: true,
 })
 
 User.sync({

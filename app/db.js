@@ -9,7 +9,7 @@ const sequelize = new Sequelize(config.db.database, config.db.username, config.d
         min: 0, //最小连接数量
         idle: 10000, //如果一个线程 10秒内么有被使用过的话，就释放
     },
-    logging: false,
+    logging: true,
 });
 
 module.exports = sequelize

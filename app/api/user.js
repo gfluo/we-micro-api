@@ -3,22 +3,79 @@ const Validate = require('request-validate')
 const config = require('../../config.default');
 
 class User {
-    registerRule() {
-        return {
+    constructor() {
+        this.registerRule = {
             rule: {
                 openId: 'required',
+                sex: 'required',
+                birthday: `required`,
+                mobile: `required`,
+                address: `required`,
+                occupation: `required`,
+                interest: `required`,
 
-            },
-            message: {
-                "openId.required": "openId参数不能为空"
+            }
+        },
+            this.signInRule = {
+                rule: {
+                    openId: `required`,
+                }
+            }
+    }
+
+    register = async (ctx, next) => {
+        try {
+            Validate(ctx.request.body, this.registerRule.rule);
+            let user = await model.User.findOne({ where: { openId: ctx.request.body.openId } });
+            if (user) {
+                ctx.body = {
+                    errno: -4,
+                    error: "当前微信用户已经注册"
+                }
+            } else {
+                user = await model.User.create(ctx.request.body);
+                ctx.body = {
+                    errno: 0,
+                    error: "",
+                    data: {
+                        user
+                    },
+                }
+            }
+        } catch (e) {
+            ctx.body = {
+                errno: -1,
+                error: e.message
             }
         }
     }
-    async register(ctx, next) {
-        Validate(ctx.request.body, this.registerRule().rule, this.register.message)
-        let { account, password } = ctx.request.body;
-        ctx.body = {
-            "errno": 0,
+
+    signIn = async (ctx, next) => {
+        try {
+            Validate(ctx.request.body, this.signInRule.rule)
+            const user = await model.User.findOne({ where: { openId: ctx.request.body.openId } })
+            if (user) {
+                ctx.body = {
+                    errno: 0,
+                    error: "",
+                    data: {
+                        user
+                    },
+                }
+            } else {
+                ctx.body = {
+                    errno: -3,
+                    error: "当前微信用户未注册",
+                    data: {
+                        user
+                    },
+                }
+            }
+        } catch (e) {
+            ctx.body = {
+                errno: -2,
+                error: e.message
+            }
         }
     }
 }
