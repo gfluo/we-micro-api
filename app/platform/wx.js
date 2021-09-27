@@ -12,7 +12,7 @@ exports.auth = async (code) => {
             // This example demonstrates all of the supported options.
             // Request method (uppercase): POST, DELETE, ...
             method: 'GET',
-            qs: {
+            params: {
                 appid: APP_KEY,
                 secret: APP_SECRET,
                 js_code: code,
