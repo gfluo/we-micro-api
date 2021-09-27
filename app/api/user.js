@@ -1,5 +1,6 @@
 const model = require('../model');
-const Validate = require('request-validate')
+const Validate = require('request-validate');
+const WxClient = require('../platform/wx');
 const config = require('../../config.default');
 
 class User {
@@ -58,7 +59,11 @@ class User {
     wxCode = async (ctx, next) => {
         try {
             Validate(ctx.request.body, this.wxCodeRule.rule);
-            console.log(ctx.request.body)
+            let resp = await WxClient.auth(ctx.request.body.code);
+            ctx.body = {
+                errno: 0,
+                data: resp
+            }
         } catch (e) {
             ctx.body = {
                 errno: -2,
