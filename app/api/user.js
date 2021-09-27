@@ -57,7 +57,7 @@ class User {
 
     wxCode = async (ctx, next) => {
         try {
-            Validate(ctx.request.body, this.wxCodeRule);
+            Validate(ctx.request.body, this.wxCodeRule.rule);
             console.log(ctx.request.body)
         } catch (e) {
             ctx.body = {
