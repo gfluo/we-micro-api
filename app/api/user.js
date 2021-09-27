@@ -16,11 +16,16 @@ class User {
 
             }
         },
-            this.signInRule = {
-                rule: {
-                    openId: `required`,
-                }
+        this.signInRule = {
+            rule: {
+                openId: `required`,
             }
+        }
+        this.wxCodeRule = {
+            rule: {
+                code: `required`,
+            }
+        }
     }
 
     register = async (ctx, next) => {
@@ -45,6 +50,18 @@ class User {
         } catch (e) {
             ctx.body = {
                 errno: -1,
+                error: e.message
+            }
+        }
+    }
+
+    wxCode = async (ctx, next) => {
+        try {
+            Validate(ctx.request.body, this.wxCodeRule);
+            console.log(ctx.request.body)
+        } catch (e) {
+            ctx.body = {
+                errno: -2,
                 error: e.message
             }
         }
