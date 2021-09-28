@@ -80,6 +80,7 @@ const createPaySign = (obj) => {
     }
     const sign = crypto.createHash('md5').update(signStr, 'utf-8').digest('hex').toUpperCase();
     newObj.paySign = sign;
+    delete newObj["appId"];
     return newObj;
 }
 
