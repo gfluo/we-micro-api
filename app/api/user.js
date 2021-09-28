@@ -17,11 +17,11 @@ class User {
 
             }
         },
-        this.signInRule = {
-            rule: {
-                openId: `required`,
+            this.signInRule = {
+                rule: {
+                    openId: `required`,
+                }
             }
-        }
         this.wxCodeRule = {
             rule: {
                 code: `required`,
@@ -59,16 +59,12 @@ class User {
     wxCode = async (ctx, next) => {
         try {
             Validate(ctx.request.body, this.wxCodeRule.rule);
-            const resp = await WxClient.auth(ctx.request.body.code);
-            console.log(resp);
-            if (resp.data.errno === 0) {
-                const wxUserSecrrtInfo = resp.data.data;
-                const orderCreateResp = await WxClient.createOrder(0.01, wxUserSecrrtInfo["openid"]);
-            }
+            const wxUserSecrrtInfo = await WxClient.auth(ctx.request.body.code);
+            const orderCreateResp = await WxClient.createOrder(0.01, wxUserSecrrtInfo["openid"]);
 
             ctx.body = {
                 errno: 0,
-                data: resp
+                data: orderCreateResp
             }
         } catch (e) {
             ctx.body = {
