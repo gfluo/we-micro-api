@@ -1,6 +1,7 @@
 const request = require('request-promise');
 const config = require('../../config.default');
 const uuid = require('uuid');
+const xml2js = require('xml2js');
 const crypto = require('crypto');
 
 const APP_KEY = config.wxMicro.appKey;
