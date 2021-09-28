@@ -30,7 +30,7 @@ const objToXml = (obj) => {
 
 const nonceStr = () => {
     const str = uuid.v4();
-    return str.replaceAll("_", "");
+    return str;
 }
 
 const createSign = (obj) => {
