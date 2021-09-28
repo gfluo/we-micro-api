@@ -11,7 +11,21 @@ const SERVER_IP = '123.60.8.4';
 const ORDER_CREATE_NOTIFY_URL = 'https://www.szstswh.com//api/wxnotify/order/create';
 
 const parseXml = async (xmlData) => {
-    
+    let { parseString } = xml2js;
+    let res;
+    return new Promise((resolve, reject) => {
+        parseString(xmlData, {
+            trim: true,
+            explicitArray: false
+        }, function (err, result) {
+            if (err) {
+                reject(err)
+            } else {
+                res = result;
+                resolve(res.xml);
+            }
+        });
+    })
 };
 
 const objToXml = (obj) => {
@@ -102,7 +116,8 @@ exports.createOrder = async (amount, openId) => {
             method: 'POST',
             body: xmlStr,
         });
-        console.log(resp);
+        let respData = await parseXml(resp);
+        console.log(respData);
         return resp;
     } catch (e) {
         console.error(e)
