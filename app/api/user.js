@@ -60,8 +60,8 @@ class User {
         try {
             Validate(ctx.request.body, this.wxCodeRule.rule);
             const resp = await WxClient.auth(ctx.request.body.code);
+            console.log(resp);
             if (resp.data.errno === 0) {
-                console.log(0);
                 const wxUserSecrrtInfo = resp.data.data;
                 const orderCreateResp = await WxClient.createOrder(0.01, wxUserSecrrtInfo["openid"]);
             }
