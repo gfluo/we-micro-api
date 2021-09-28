@@ -3,7 +3,6 @@ const config = require('../../config.default');
 const uuid = require('uuid');
 const crypto = require('crypto');
 
-const WX_ADDR = config.wxMicro.apiAddr;
 const APP_KEY = config.wxMicro.appKey;
 const BUSSINESS_ID = config.wxMicro.bussiessId;
 const APP_SECRET = config.wxMicro.appSecret;
@@ -58,12 +57,11 @@ const createSign = (obj) => {
 }
 
 exports.auth = async (code) => {
-    let router = `/sns/jscode2session`;
     try {
         const resp = await request({
             // This example demonstrates all of the supported options.
             // Request method (uppercase): POST, DELETE, ...
-            uri: `${WX_ADDR}${router}`,
+            uri: `https://api.weixin.qq.com/sns/jscode2session`,
             method: 'GET',
             qs: {
                 appid: APP_KEY,
@@ -96,12 +94,11 @@ exports.createOrder = async (amount, openId) => {
     }
     const orderDataSign = createSign(orderData);
     const xmlStr = objToXml(orderDataSign);
-    let router = `/pay/unifiedorder`;
     try {
         const resp = await request({
             // This example demonstrates all of the supported options.
             // Request method (uppercase): POST, DELETE, ...
-            uri: `${WX_ADDR}${router}`,
+            uri: `https://api.mch.weixin.qq.com/pay/unifiedorder`,
             method: 'POST',
             body: xmlStr,
         });
@@ -109,6 +106,6 @@ exports.createOrder = async (amount, openId) => {
         return resp;
     } catch (e) {
         console.error(e)
-        throw new Error("get openId failed");
+        throw new Error("wx order create failed");
     }
 }

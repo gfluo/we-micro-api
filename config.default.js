@@ -12,6 +12,5 @@ module.exports = {
         bussiessId: '1613748468',
         appSecret: 'ca4c0aa72e75f9fbf7d27337c948bb45',
         apiSecret: 'QWERTYUIOP987654321asdfghjkl1234',
-        apiAddr: "https://api.weixin.qq.com",
     },
 }
