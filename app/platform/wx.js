@@ -17,6 +17,7 @@ const parseXml = async (xmlData) => {
 
 const objToXml = (obj) => {
     let tempObj = Object.assign({}, obj);
+    let jsonxml = '';
     if (tempObj) {
         jsonxml += '<xml>';
         Object.keys(tempObj).sort().map(item => {
