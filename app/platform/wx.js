@@ -48,9 +48,9 @@ const uiPayData = (orderCreateResp, nonceStr) => {
         timeStamp: new Date().getTime() + "",
         nonceStr,
         package: `prepay_id=${orderCreateResp["prepay_id"]}`,
-        signType = "MD5",
+        signType: "MD5",
     }
-    const newObj = createPaySign(obj)
+    const newObj = createPaySign(obj);
     return newObj;
 }
 
