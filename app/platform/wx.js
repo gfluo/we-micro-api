@@ -48,6 +48,7 @@ const uiPayData = (orderCreateResp, nonceStr) => {
         timeStamp: new Date().getTime() + "",
         nonceStr,
         package: `prepay_id=${orderCreateResp["prepay_id"]}`,
+        signType = "MD5",
     }
     const newObj = createPaySign(obj)
     return newObj;
@@ -78,7 +79,6 @@ const createPaySign = (obj) => {
     }
     const sign = crypto.createHash('md5').update(signStr, 'utf-8').digest('hex').toUpperCase();
     newObj.paySign = sign;
-    newObj.signType = "MD5";
     return newObj;
 }
 
@@ -129,6 +129,7 @@ exports.auth = async (code) => {
 
 exports.createOrder = async (amount, openId) => {
     const orderData = {
+        sign_type: "MD5",
         appid: APP_KEY,
         mch_id: BUSSINESS_ID,
         nonce_str: nonceStr(),
