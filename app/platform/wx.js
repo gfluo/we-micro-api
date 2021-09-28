@@ -45,6 +45,7 @@ const objToXml = (obj) => {
 
 const uiPayData = (orderCreateResp, nonceStr) => {
     const obj = {
+        appId: APP_KEY,
         timeStamp: new Date().getTime() + "",
         nonceStr,
         package: `prepay_id=${orderCreateResp["prepay_id"]}`,
