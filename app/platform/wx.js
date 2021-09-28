@@ -43,10 +43,10 @@ const objToXml = (obj) => {
     return jsonxml;
 }
 
-const uiPayData = (orderCreateResp) => {
+const uiPayData = (orderCreateResp, nonceStr) => {
     const obj = {
         timeStamp: new Date().getTime() + "",
-        nonceStr: nonceStr(),
+        nonceStr,
         package: `prepay_id=${orderCreateResp["prepay_id"]}`,
         signType: "MD5",
     }
@@ -152,7 +152,7 @@ exports.createOrder = async (amount, openId) => {
             body: xmlStr,
         });
         let respData = await parseXml(resp);
-        let uiData = uiPayData(respData);
+        let uiData = uiPayData(respData, orderData.nonce_str);
         return uiData;
     } catch (e) {
         console.error(e)
