@@ -43,9 +43,43 @@ const objToXml = (obj) => {
     return jsonxml;
 }
 
+const uiPayData = (orderCreateResp) => {
+    const obj = {
+        timeStamp: new Date().getTime() + "",
+        nonceStr: nonceStr(),
+        package: `prepay_id=${orderCreateResp["prepay_id"]}`,
+        signType: "MD5",
+    }
+    const newObj = createPaySign(obj)
+    return newObj;
+}
+
 const nonceStr = () => {
     const str = uuid.v4();
     return str.replace(/-/g, "");
+}
+
+const createPaySign = (obj) => {
+    let tempObj = Object.assign({}, obj);
+    let signStr = "";
+    let newObj = {};
+    Object.keys(tempObj).sort().map(item => {
+        if (tempObj[item] != ""
+            && !(tempObj[item] instanceof Array && tempObj[item].length == 0)
+            && !(tempObj[item] instanceof Object && Object.keys(tempObj[item]).length == 0)) {
+            if (tempObj[item] instanceof Object) {
+                tempObj[item] = JSON.stringify(tempObj[item]);
+            }
+            signStr += (item + "=" + tempObj[item] + "&");
+            newObj[item] = tempObj[item];
+        }
+    });
+    if (signStr) {
+        signStr += ("key=" + API_SECRET);
+    }
+    const sign = crypto.createHash('md5').update(signStr, 'utf-8').digest('hex').toUpperCase();
+    newObj.paySign = sign;
+    return newObj;
 }
 
 const createSign = (obj) => {
@@ -118,8 +152,8 @@ exports.createOrder = async (amount, openId) => {
             body: xmlStr,
         });
         let respData = await parseXml(resp);
-        console.log(respData);
-        return resp;
+        let uiData = uiPayData(respData);
+        return uiData;
     } catch (e) {
         console.error(e)
         throw new Error("wx order create failed");
