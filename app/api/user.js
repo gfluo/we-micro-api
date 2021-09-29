@@ -55,6 +55,7 @@ class User {
                 }
             }
         } catch (e) {
+            console.log(e);
             ctx.body = {
                 errno: -1,
                 error: e.message
