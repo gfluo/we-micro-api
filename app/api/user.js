@@ -40,8 +40,11 @@ class User {
                     where: user.id
                 })
                 ctx.body = {
-                    errno: -4,
-                    error: "当前微信用户已经注册"
+                    errno: 0,
+                    error: "",
+                    data: {
+                        
+                    }
                 }
             } else {
                 user = await model.User.create(ctx.request.body);
