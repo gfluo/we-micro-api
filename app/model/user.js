@@ -9,6 +9,11 @@ const User = sequelize.define('user', {
         allowNull: false,
         autoIncrement: true
     },
+    username: {
+        field: 'username',
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
     openId: {
         field: 'open_id',
         type: Sequelize.STRING,
