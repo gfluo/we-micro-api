@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../db');
 
-const OrderDetail = sequelize.define('user', {
+const OrderDetail = sequelize.define('order_detail', {
     id: {
         field: 'id',
         primaryKey: true,
