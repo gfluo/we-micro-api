@@ -17,14 +17,27 @@ class User {
 
             }
         },
-            this.signInRule = {
-                rule: {
-                    openId: `required`,
-                }
+        this.signInRule = {
+            rule: {
+                openId: `required`,
             }
+        },
         this.wxCodeRule = {
             rule: {
                 code: `required`,
+            }
+        },
+        this.joinConfirmRule = {
+            rule: {
+                openId: `required`,
+                amount: `required`,
+                productId: `required`,
+            }
+        },
+        this.ifJoinRule = {
+            rule: {
+                openId: `required`,
+                productId: `required`,
             }
         }
     }
@@ -107,6 +120,45 @@ class User {
         } catch (e) {
             ctx.body = {
                 errno: -2,
+                error: e.message
+            }
+        }
+    }
+
+    joinConfirm = async (ctx, next) => {
+        try {
+            Validate(ctx.request.body, this.joinConfirmRule.rule)
+
+        } catch (e) {
+            console.error(e);
+            ctx.body = {
+                errno: -5,
+                error: e.message
+            }
+        }
+    }
+
+    ifJoin = async (ctx, next) => {
+        try {
+            Validate(ctx.request.body, this.ifJoinRule.rule)
+            const orderDetail = await model.OrderDetail.findOne({
+                where: {
+                    openId: ctx.request.body.openId,
+                    productId: ctx.request.body.productId,
+                    orderStatus: 1,
+                }
+            })
+            ctx.body = {
+                errno: 0,
+                error: "",
+                data: {
+                    ifJoin: orderDetail ? true : false
+                }
+            }
+        } catch (e) {
+            console.error(e);
+            ctx.body = {
+                errno: -5,
                 error: e.message
             }
         }
