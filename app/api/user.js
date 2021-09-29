@@ -54,7 +54,7 @@ class User {
                     errno: 0,
                     error: "",
                     data: {
-                        ...user
+                        user
                     },
                 }
             }
@@ -95,7 +95,7 @@ class User {
                     errno: 0,
                     error: "",
                     data: {
-                        ...user
+                        user
                     },
                 }
             } else {
