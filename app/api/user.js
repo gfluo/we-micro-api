@@ -60,11 +60,12 @@ class User {
         try {
             Validate(ctx.request.body, this.wxCodeRule.rule);
             const wxUserSecrrtInfo = await WxClient.auth(ctx.request.body.code);
-            const orderCreateResp = await WxClient.createOrder(1, wxUserSecrrtInfo["openid"]);
-
+            //const orderCreateResp = await WxClient.createOrder(1, wxUserSecrrtInfo["openid"]);
             ctx.body = {
                 errno: 0,
-                data: orderCreateResp
+                data: {
+                    openId: wxUserSecrrtInfo["openid"]
+                }
             }
         } catch (e) {
             ctx.body = {
