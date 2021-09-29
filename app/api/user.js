@@ -44,7 +44,7 @@ class User {
                     errno: 0,
                     error: "",
                     data: {
-                        user
+                        ...user
                     },
                 }
             }
@@ -84,16 +84,13 @@ class User {
                     errno: 0,
                     error: "",
                     data: {
-                        user
+                        ...user
                     },
                 }
             } else {
                 ctx.body = {
                     errno: -3,
-                    error: "当前微信用户未注册",
-                    data: {
-                        user
-                    },
+                    error: "当前微信用户信息未填写",
                 }
             }
         } catch (e) {
