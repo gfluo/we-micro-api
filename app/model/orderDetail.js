@@ -37,7 +37,7 @@ const OrderDetail = sequelize.define('user', {
     timestamps: true,
 })
 
-User.sync({
+OrderDetail.sync({
     force: false
 })
 
