@@ -184,6 +184,7 @@ class User {
                 }
             }
         } catch (e) {
+            console.error(e);
             ctx.body = {
                 errno: -6,
                 error: e.message
