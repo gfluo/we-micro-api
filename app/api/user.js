@@ -34,16 +34,14 @@ class User {
             Validate(ctx.request.body, this.registerRule.rule);
             let user = await model.User.findOne({ where: { openId: ctx.request.body.openId } });
             if (user) {
-                await model.User.update({
-                    ...ctx.request.body
-                }, {
+                await model.User.update(ctx.request.body, {
                     where: user.id
                 })
                 ctx.body = {
                     errno: 0,
                     error: "",
                     data: {
-                        
+
                     }
                 }
             } else {
