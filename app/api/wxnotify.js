@@ -1,7 +1,9 @@
+const WxClient = require('../platform/wx');
+
 class Wxnotify {
     createOrder = async (ctx, next) => {
-        console.log(ctx.request.body)
-        ctx.body = "ok";
+        const retInfo = await WxClient.notifyParse(ctx.request.body);
+        ctx.body = retInfo;
     }
 }
 

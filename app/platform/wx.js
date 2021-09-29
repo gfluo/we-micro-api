@@ -172,3 +172,30 @@ exports.createOrder = async (amount, openId, productId, title) => {
         throw new Error("wx order create failed");
     }
 }
+
+exports.notifyParse = async (obj) => {
+    const notify = obj["xml"];
+    const resultCode = notify["result_code"][0];
+    const returnCode = notify["return_code"][0];
+    const outTradeNo = notify["out_trade_no"][0];
+
+    console.log(`returnCode: ${returnCode} ----  resultCode: ${resultCode}`);
+
+    if (resultCode === "SUCCESS" && returnCode === "SUCCESS") {
+        await model.OrderDetail.update({
+            orderStatus: 1
+        }, {
+            where: {
+                tradeId: outTradeNo
+            }
+        })
+    } else {
+        console.log('订单状态异常') 
+    }
+
+    const retObj = {
+        return_code: "SUCCESS"
+    }
+
+    return objToXml(retObj)
+}
