@@ -179,6 +179,20 @@ class User {
             let openId = ctx.request.body.openId;
             let productId = ctx.request.body.productId;
             let title = ctx.request.body.title;
+
+            let user = await model.User.findOne({
+                where: {
+                    openId: openId
+                }
+            })
+
+            if (!user) {
+                return ctx.body = {
+                    errno: -7,
+                    error: "用户未注册，不能参加活动"
+                }
+            }
+
             const orderCreateResp = await WxClient.createOrder(amount, openId, productId, title);
             ctx.body = {
                 errno: 0,
