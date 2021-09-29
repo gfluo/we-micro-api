@@ -162,7 +162,7 @@ exports.createOrder = async (amount, openId, productId, title) => {
             productId,
             orderAmount: amount,
             orderStatus: 0,
-            tarde_id: orderData.out_trade_no 
+            tardeId: orderData.out_trade_no 
         })
 
         let uiData = uiPayData(respData, orderData.nonce_str);
