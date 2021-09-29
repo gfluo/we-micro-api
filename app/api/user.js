@@ -39,6 +39,14 @@ class User {
                 openId: `required`,
                 productId: `required`,
             }
+        },
+        this.activityJoinRule = {
+            rule: {
+                openId: `required`,
+                productId: `required`,
+                amount: `required`,
+                title: `required`,
+            }
         }
     }
 
@@ -159,6 +167,25 @@ class User {
             console.error(e);
             ctx.body = {
                 errno: -5,
+                error: e.message
+            }
+        }
+    }
+
+    activityJoin = async (ctx, next) => {
+        try {
+            Validate(ctx.request.body, this.activityJoinRule.rule);
+            const [openId, productId, amount, title] = ctx.request.body;
+            const orderCreateResp = await WxClient.createOrder(amount, openId, productId, title);
+            ctx.body = {
+                errno: 0,
+                data: {
+                    orderCreateResp
+                }
+            }
+        } catch (e) {
+            ctx.body = {
+                errno: -6,
                 error: e.message
             }
         }

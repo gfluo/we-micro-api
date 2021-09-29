@@ -3,6 +3,7 @@ const config = require('../../config.default');
 const uuid = require('uuid');
 const xml2js = require('xml2js');
 const crypto = require('crypto');
+const model = require('../model');
 
 const APP_KEY = config.wxMicro.appKey;
 const BUSSINESS_ID = config.wxMicro.bussiessId;
@@ -129,14 +130,14 @@ exports.auth = async (code) => {
     }
 }
 
-exports.createOrder = async (amount, openId) => {
+exports.createOrder = async (amount, openId, productId, title) => {
     const orderData = {
         sign_type: "MD5",
         appid: APP_KEY,
         mch_id: BUSSINESS_ID,
         nonce_str: nonceStr(),
         device_info: "WEB",
-        body: "虎威-测试",
+        body: `腾狮-${title}`,
         out_trade_no: new Date().getTime() + '',    //订单号
         total_fee: amount,
         spbill_create_ip: SERVER_IP,
@@ -155,6 +156,15 @@ exports.createOrder = async (amount, openId) => {
             body: xmlStr,
         });
         let respData = await parseXml(resp);
+        //创建订单
+        await model.OrderDetail.create({
+            openId,
+            productId,
+            orderAmount: amount,
+            orderStatus: 0,
+            tarde_id: orderData.out_trade_no 
+        })
+
         let uiData = uiPayData(respData, orderData.nonce_str);
         return uiData;
     } catch (e) {

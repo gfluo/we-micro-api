@@ -19,7 +19,7 @@ const OrderDetail = sequelize.define('order_detail', {
         allowNull: false,
     },
     tradeId: {
-        field: 'trade_od',
+        field: 'trade_id',
         type: Sequelize.STRING,
         allowNull: false
     },
