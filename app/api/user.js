@@ -175,8 +175,8 @@ class User {
     activityJoin = async (ctx, next) => {
         try {
             Validate(ctx.request.body, this.activityJoinRule.rule);
-            let [openId, productId, amount, title] = ctx.request.body;
-            const orderCreateResp = await WxClient.createOrder(amount, openId, productId, title);
+            
+            const orderCreateResp = await WxClient.createOrder(...ctx.request.body);
             ctx.body = {
                 errno: 0,
                 data: {
