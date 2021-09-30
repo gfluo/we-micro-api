@@ -44,6 +44,10 @@ const OrderDetail = sequelize.define('order_detail', {
     imgSrc: {
         field: 'img_src',
         type: Sequelize.STRING,
+    },
+    title: {
+        field: 'title',
+        type: Sequelize.STRING,
     }
 }, {
     timestamps: true,

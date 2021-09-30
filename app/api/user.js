@@ -48,7 +48,8 @@ class User {
                 title: `required`,
                 address: `required`,
                 activityDate: `required`,
-                imgSrc: `required`
+                imgSrc: `required`,
+                title: `required`,
             }
         }
     }
