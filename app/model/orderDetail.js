@@ -32,6 +32,18 @@ const OrderDetail = sequelize.define('order_detail', {
     orderAmount: {
         field: 'order_amount',
         type: Sequelize.INTEGER,
+    },
+    address: {
+        field: 'address',
+        type: Sequelize.STRING,
+    },
+    activityDate: {
+        field: 'activity_date',
+        type: Sequelize.STRING,
+    },
+    imgSrc: {
+        field: 'img_src',
+        type: Sequelize.STRING,
     }
 }, {
     timestamps: true,

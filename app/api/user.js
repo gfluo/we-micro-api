@@ -46,6 +46,9 @@ class User {
                 productId: `required`,
                 amount: `required`,
                 title: `required`,
+                address: `required`,
+                activityDate: `required`,
+                imgSrc: `required`
             }
         }
     }
@@ -175,11 +178,7 @@ class User {
     activityJoin = async (ctx, next) => {
         try {
             Validate(ctx.request.body, this.activityJoinRule.rule);
-            let amount = ctx.request.body.amount;
-            let openId = ctx.request.body.openId;
-            let productId = ctx.request.body.productId;
-            let title = ctx.request.body.title;
-            const orderCreateResp = await WxClient.createOrder(amount, openId, productId, title);
+            const orderCreateResp = await WxClient.createOrder(ctx.request.body);
             ctx.body = {
                 errno: 0,
                 data: {

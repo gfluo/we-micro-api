@@ -130,7 +130,8 @@ exports.auth = async (code) => {
     }
 }
 
-exports.createOrder = async (amount, openId, productId, title) => {
+exports.createOrder = async (orderInfo) => {
+    let { amount, openId, productId, title } = orderInfo;
     const orderData = {
         sign_type: "MD5",
         appid: APP_KEY,
@@ -162,7 +163,7 @@ exports.createOrder = async (amount, openId, productId, title) => {
             productId,
             orderAmount: amount,
             orderStatus: 0,
-            tradeId: orderData.out_trade_no 
+            tradeId: orderData.out_trade_no
         })
 
         let uiData = uiPayData(respData, orderData.nonce_str);
@@ -190,7 +191,7 @@ exports.notifyParse = async (obj) => {
             }
         })
     } else {
-        console.log('订单状态异常') 
+        console.log('订单状态异常')
     }
 
     const retObj = {
