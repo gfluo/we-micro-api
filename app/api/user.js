@@ -218,7 +218,8 @@ class User {
                     address: orderList[i].address,
                     activityDate: orderList[i].activityDate,
                     imgSrc: orderList[i].imgSrc,
-                    orderStatus: orderList[i].orderStatus == 0 ? "付款未成功" : "已完成付款"
+                    orderStatus: orderList[i].orderStatus == 0 ? "付款未成功" : "已完成付款",
+                    title: orderList[i].title,
                 })
             }
             ctx.body = {
