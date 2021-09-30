@@ -180,7 +180,7 @@ class User {
             Validate(ctx.request.body, this.activityJoinRule.rule);
             let user = await model.User.findOne({
                 where: {
-                    openId: openId
+                    openId: ctx.request.body.openId
                 }
             })
 
