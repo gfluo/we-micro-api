@@ -209,7 +209,7 @@ class User {
     orders = async (ctx, next) => {
         try {
             Validate(ctx.request.body, this.signInRule.rule)
-            const orderList = await model.OrderDetail.findMany({ where: { openId: ctx.request.body.openId } });
+            const orderList = await model.OrderDetail.find({ where: { openId: ctx.request.body.openId } });
             const orderListRet = [];
             for (let i in orderList) {
                 orderListRet.push({
