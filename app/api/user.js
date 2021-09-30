@@ -178,6 +178,18 @@ class User {
     activityJoin = async (ctx, next) => {
         try {
             Validate(ctx.request.body, this.activityJoinRule.rule);
+            let user = await model.User.findOne({
+                where: {
+                    openId: openId
+                }
+            })
+
+            if (!user) {
+                return ctx.body = {
+                    errno: -7,
+                    error: "用户未注册，不能参加活动"
+                }
+            }
             const orderCreateResp = await WxClient.createOrder(ctx.request.body);
             ctx.body = {
                 errno: 0,
