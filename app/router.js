@@ -7,6 +7,7 @@ routerApi.post('/api/signIn', api.User.signIn);
 routerApi.post('/api/wx/code', api.User.wxCode);
 routerApi.post('/api/activity/join/status', api.User.ifJoin);
 routerApi.post('/api/activity/join', api.User.activityJoin);
+routerApi.post('/api/activity/orders', api.User.orders);
 
 //notify
 routerApi.post('/api/wxnotify/order/create', api.Wxnotify.createOrder);

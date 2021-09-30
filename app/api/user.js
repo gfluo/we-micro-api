@@ -205,6 +205,36 @@ class User {
             }
         }
     }
+
+    orders = async (ctx, next) => {
+        try {
+            Validate(ctx.request.body, this.signInRule.rule)
+            const orderList = await model.OrderDetail.findMany({ where: { openId: ctx.request.body.openId } });
+            const orderListRet = [];
+            for (let i in orderList) {
+                orderListRet.push({
+                    productId: orderList[i].productId,
+                    address: orderList[i].address,
+                    activityDate: orderList[i].activityDate,
+                    imgSrc: orderList[i].imgSrc,
+                    orderStatus: orderList[i].orderStatus == 0 ? "付款未成功" : "已完成付款"
+                })
+            }
+            ctx.body = {
+                errno: 0,
+                data: {
+                    orders: orderListRet
+                },
+                error: "",
+            }
+
+        } catch (e) {
+            ctx.body = {
+                errno: -2,
+                error: e.message
+            }
+        }
+    }
 }
 
 module.exports = new User()
