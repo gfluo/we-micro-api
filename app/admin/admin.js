@@ -183,6 +183,18 @@ class Main {
                 ctx.request.body.endTime = new Date(ctx.request.body.endTime).getTime()
             }
 
+            if (ctx.request.body.amount) {
+                if (typeof ctx.request.body.amount == "number") {
+                    ctx.request.body.amount = ctx.request.body.amount * 100;
+                } else if (typeof ctx.request.body.amount == "string") {
+                    ctx.request.body.amount = parseInt(ctx.request.body.amount) * 100;
+                } else {
+                    ctx.request.body.amount = 0;
+                }
+            } else {
+                ctx.request.body.amount = 0;
+            }
+
             await model.Activity.create({
                 ...ctx.request.body
             })
