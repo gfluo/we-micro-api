@@ -21,13 +21,13 @@ const Activity = sequelize.define('activity', {
     },
     startTime: {
         field: 'start_time',
-        type: Sequelize.INTEGER,
+        type: Sequelize.BIGINT,
         allowNull: false,
         default: 0,
     },
     endTime: {
         field: 'end_time',
-        type: Sequelize.INTEGER,
+        type: Sequelize.BIGINT,
     },
     describe: {
         field: 'describe',
