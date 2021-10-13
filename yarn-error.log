@@ -1,0 +1,59 @@
+Arguments: 
+  D:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js
+
+PATH: 
+  C:\Users\、\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\、\bin;D:\Go\bin;D:\gowork\bin;D:\Program Files\java\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Python38\Scripts;C:\Python38;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\iCLS;C:\Program Files\Intel\Intel(R) Management Engine Components\iCLS;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\WINDOWS\System32\OpenSSH;D:\Program Files\ffmpeg\bin;C:\Program Files\MongoDB\Server\4.0\bin;D:\Go\bin;C:\Program Files (x86)\Yarn\bin;C:\Program Files\dotnet;C:\ProgramData\chocolatey\bin;D:\Program Files\Dart\dart-sdk\bin;C:\Program Files\Git\cmd;D:\tool\protoc\bin;D:\gowork\bin;D:\Program Files\nodejs;D:\Programs\Python\Python38-32\Scripts;D:\Programs\Python\Python38-32;C:\Users\、\AppData\Local\Microsoft\WindowsApps;USERPROFILE%\go\bin;D:\Users\、\AppData\Local\Programs\Microsoft VS Code\bin;USERPROFILE%\AppData\Local\Microsoft\WindowsApps;C:\Users\、\AppData\Local\Yarn\bin;USERPROFILE%\.dotnet\tools;C:\Users\、\AppData\Local\Microsoft\WindowsApps;C:\Users\、\AppData\Roaming\npm;D:\Program Files\java\bin;D:\java\apache-maven-3.8.2\bin;D:\java\apache-maven-3.8.2\bin;D:\java\gradle-6.9.1\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+
+Yarn version: 
+  1.22.4
+
+Node version: 
+  12.18.4
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: ENOENT: no such file or directory, copyfile 'C:\Users\、\AppData\Local\Yarn\Cache\v6\npm-yallist-2.1.2-1c11f9218f076089a47dd512f93c6699a6a81d52-integrity\node_modules\yallist\LICENSE' -> 'D:\node\we-micro-api\node_modules\named-placeholders\node_modules\yallist\LICENSE'
+
+npm manifest: 
+  {
+    "name": "we-micro-api",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/gfluo/we-micro-api.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/gfluo/we-micro-api/issues"
+    },
+    "homepage": "https://github.com/gfluo/we-micro-api#readme",
+    "dependencies": {
+      "koa": "^2.13.1",
+      "koa-bodyparser": "^4.3.0",
+      "koa-router": "^10.1.1",
+      "koa-xml-body": "^2.2.0",
+      "koa2-cors": "^2.0.6",
+      "moment": "^2.29.1",
+      "mysql2": "^2.3.0",
+      "request": "^2.88.2",
+      "request-promise": "^4.2.6",
+      "request-validate": "^1.0.9",
+      "sequelize": "^6.6.5",
+      "uuid": "^8.3.2",
+      "xml2js": "^0.4.23"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

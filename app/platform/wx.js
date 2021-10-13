@@ -10,7 +10,7 @@ const BUSSINESS_ID = config.wxMicro.bussiessId;
 const APP_SECRET = config.wxMicro.appSecret;
 const API_SECRET = config.wxMicro.apiSecret;
 const SERVER_IP = '123.60.8.4';
-const ORDER_CREATE_NOTIFY_URL = 'https://www.szstswh.com//api/wxnotify/order/create';
+const ORDER_CREATE_NOTIFY_URL = 'https://www.szstswh.com/api/wxnotify/order/create';
 
 const parseXml = async (xmlData) => {
     let { parseString } = xml2js;
