@@ -175,6 +175,14 @@ class Main {
                 ctx.request.body.link = ctx.request.body.link.join(',');
             }
 
+            if (ctx.request.body.startTime) {
+                ctx.request.body.startTime = new Date(ctx.request.body.startTime).getTime()
+            }
+
+            if (ctx.request.body.endTime) {
+                ctx.request.body.endTime = new Date(ctx.request.body.endTime).getTime()
+            }
+
             await model.Activity.create({
                 ...ctx.request.body
             })
