@@ -171,6 +171,10 @@ class Main {
 
     activityCreate = async (ctx, next) => {
         try {
+            if (ctx.request.body.link && ctx.request.body.link instanceof Array) {
+                ctx.request.body.link = ctx.request.body.link.join(',');
+            }
+
             await model.Activity.create({
                 ...ctx.request.body
             })
