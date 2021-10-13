@@ -37,7 +37,7 @@ const Activity = sequelize.define('activity', {
         field: 'link',
         type: Sequelize.TEXT,
     },
-    amout: {
+    amount: {
         field: 'amount',
         type: Sequelize.INTEGER,
     },
