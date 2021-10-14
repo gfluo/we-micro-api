@@ -153,6 +153,13 @@ class Main {
                 offset: offset,
             })
 
+            activities.rows = activities.rows.map((item) => {
+                item = item.toJSON();
+                item.startTime = moment(item.startTime).format("YYYY-MM-DD HH:mm:ss");
+                item.endTime = moment(item.endTime).format("YYYY-MM-DD HH:mm:ss");
+                return item;
+            })
+
             ctx.body = {
                 errno: 0,
                 data: {
