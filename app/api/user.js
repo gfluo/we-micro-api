@@ -11,9 +11,9 @@ class User {
                 sex: 'required',
                 birthday: `required`,
                 mobile: `required`,
-                address: `required`,
-                occupation: `required`,
-                interest: `required`,
+                //address: `required`,
+                //occupation: `required`,
+                //interest: `required`,
 
             }
         },
