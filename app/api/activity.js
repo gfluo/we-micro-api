@@ -34,6 +34,7 @@ class Activity {
             activity.period = Math.ceil(period / (3600 * 1000)) + '小时';
             activity.startTime = moment(activity.startTime).format("YYYY-MM-DD HH:mm:ss");
             activity.amount = activity.amount / 100;
+            activity.link = activity.link.split(',');
             ctx.body = {
                 errno: 0,
                 error: "",
