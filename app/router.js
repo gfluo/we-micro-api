@@ -9,6 +9,7 @@ routerApi.post('/api/wx/code', api.User.wxCode);
 routerApi.post('/api/activity/join/status', api.User.ifJoin);
 routerApi.post('/api/activity/join', api.User.activityJoin);
 routerApi.post('/api/activity/orders', api.User.orders);
+routerApi.post('/api/activities', api.Activity.activities);
 
 //admin
 routerApi.post('/admin/signIn', admin.Admin.signIn);
