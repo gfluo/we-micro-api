@@ -5,7 +5,7 @@ class Activity {
     activities = async (ctx, next) => {
         let activityAll = await model.Activity.findAndCountAll({
 
-        }) 
+        })
         activityAll.rows = activityAll.rows.map((item => {
             item = item.toJSON();
             let period = item.endTime > item.startTime ? item.endTime - item.startTime : 0;
@@ -19,6 +19,30 @@ class Activity {
             error: "",
             data: {
                 activities: activityAll.rows
+            }
+        }
+    }
+    activityDetail = async (ctx, next) => {
+        let activity = await model.Activity.findOne({
+            where: {
+                id: ctx.request.body.id
+            }
+        })
+        if (activity) {
+            activity = activity.toJSON();
+            let period = activity.endTime > activity.startTime ? activity.endTime - activity.startTime : 0;
+            activity.period = Math.ceil(period / (3600 * 1000)) + '小时';
+            activity.startTime = moment(activity.startTime).format("YYYY-MM-DD HH:mm:ss");
+            activity.amount = activity.amount / 100;
+            ctx.body = {
+                errno: 0,
+                error: "",
+                data: activity
+            }
+        } else {
+            ctx.body = {
+                errno: -15,
+                error: "当前活动不存在",
             }
         }
     }
