@@ -10,7 +10,12 @@ class Main {
                 account: `required`,
                 password: `required`,
             }
-        }
+        },
+            this.activityDelRule = {
+                rule: {
+                    activityId: `required`
+                }
+            }
     }
 
     signIn = async (ctx, next) => {
@@ -120,7 +125,7 @@ class Main {
                     orderList: orders.rows.map((item) => {
                         item = item.toJSON();
                         item.createdAt = moment(item.createdAt).format("YYYY-MM-DD HH:mm:ss");
-                        item.orderAmount = parseFloat(item.orderAmount/100);
+                        item.orderAmount = parseFloat(item.orderAmount / 100);
                         return item;
                     }),
                     total: orders.count,
@@ -214,6 +219,28 @@ class Main {
             console.error(e);
             ctx.body = {
                 errno: -13,
+                error: e.message,
+            }
+        }
+    }
+
+    activityDel = async (ctx, next) => {
+        try {
+            Validate(ctx.request.body, this.activityDelRule.rule);
+            await model.Activity.destroy({
+                where: {
+                    id: ctx.request.body.activityId
+                }
+            })
+            ctx.body = {
+                errno: 0,
+                error: "",
+                data: {}
+            }
+        } catch (e) {
+            console.log(e)
+            ctx.body = {
+                errno: -17,
                 error: e.message,
             }
         }
