@@ -19,6 +19,7 @@ routerApi.get('/admin/orders', admin.Admin.orders);
 routerApi.get('/admin/activities', admin.Admin.activities);
 routerApi.post('/admin/activity', admin.Admin.activityCreate);
 routerApi.post('/admin/activity/del', admin.Admin.activityDel);
+routerApi.post('/admin/activity/detail', admin.Admin.activityDetail);
 
 //notify
 routerApi.post('/api/wxnotify/order/create', api.Wxnotify.createOrder);

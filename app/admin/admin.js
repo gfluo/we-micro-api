@@ -245,6 +245,26 @@ class Main {
             }
         }
     }
+
+    activityDetail = async (ctx, next) => {
+        let activity = await model.Activity.findOne({
+            where: {
+                id: ctx.request.body.id
+            }
+        })
+        if (activity) {
+            ctx.body = {
+                errno: 0,
+                error: "",
+                data: activity
+            }
+        } else {
+            ctx.body = {
+                errno: -15,
+                error: "当前活动不存在",
+            }
+        }
+    }
 }
 
 module.exports = new Main()
