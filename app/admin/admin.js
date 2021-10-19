@@ -224,6 +224,55 @@ class Main {
         }
     }
 
+    activityUpdate = async (ctx, next) => {
+        try {
+            let id = ctx.request.body.id;
+            delete ctx.request.body.id;
+            if (ctx.request.body.link && ctx.request.body.link instanceof Array) {
+                ctx.request.body.link = ctx.request.body.link.join(',');
+            }
+
+            if (ctx.request.body.startTime) {
+                ctx.request.body.startTime = new Date(ctx.request.body.startTime).getTime()
+            }
+
+            if (ctx.request.body.endTime) {
+                ctx.request.body.endTime = new Date(ctx.request.body.endTime).getTime()
+            }
+
+            if (ctx.request.body.amount) {
+                if (typeof ctx.request.body.amount == "number") {
+                    ctx.request.body.amount = ctx.request.body.amount * 100;
+                } else if (typeof ctx.request.body.amount == "string") {
+                    ctx.request.body.amount = parseInt(ctx.request.body.amount) * 100;
+                } else {
+                    ctx.request.body.amount = 0;
+                }
+            } else {
+                ctx.request.body.amount = 0;
+            }
+
+            await model.Activity.update({
+                ...ctx.request.body
+            }, {
+                where: {
+                    id: id
+                }
+            })
+
+            ctx.body = {
+                errno: 0,
+                error: "",
+            }
+        } catch (e) {
+            console.error(e);
+            ctx.body = {
+                errno: -18,
+                error: e.message,
+            }
+        }
+    }
+
     activityDel = async (ctx, next) => {
         try {
             Validate(ctx.request.body, this.activityDelRule.rule);
