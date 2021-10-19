@@ -4,7 +4,10 @@ const moment = require('moment');
 class Activity {
     activities = async (ctx, next) => {
         let activityAll = await model.Activity.findAndCountAll({
-
+            order: [
+                ['id', 'DESC']  // 逆序
+                // ['id'] 正序
+            ]
         })
         activityAll.rows = activityAll.rows.map((item => {
             item = item.toJSON();
