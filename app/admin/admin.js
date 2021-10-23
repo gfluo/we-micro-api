@@ -335,7 +335,7 @@ class Main {
             if (!activity.qrcode) {
                 const qrcode = await WxClient.createQrCode(ctx.request.body.activityId);
                 activity.qrcode = qrcode;
-                await activity.qrcode.save();
+                await activity.save();
                 /*
                 await model.Activity.update({
                     qrcode: qrcode,
