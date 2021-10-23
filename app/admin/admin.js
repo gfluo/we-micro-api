@@ -321,7 +321,7 @@ class Main {
             Validate(ctx.request.body, this.activityDelRule.rule);
             const activity = await model.activity.findOne({
                 where: {
-                    id: ctx.request.body.id,
+                    id: ctx.request.body.activityId,
                 }
             });
             if (!activity) {
@@ -332,7 +332,7 @@ class Main {
                 return
             }
 
-            if (activity.qrcode) {
+            if (!activity.qrcode) {
                 const qrcode = await WxClient.createQrCode(ctx.request.body.activityId);
                 await model.Activity.update({
                     qrcode: qrcode,
@@ -341,6 +341,8 @@ class Main {
                         id: ctx.request.body.activityId,
                     }
                 })
+            } else {
+                console.warn(`当前活动：${ctx.request.body.activityId} 已经生成二维码`)
             }
 
             ctx.body = {
