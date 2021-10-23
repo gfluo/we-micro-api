@@ -319,14 +319,35 @@ class Main {
     activityQrcodeCreate = async (ctx, next) => {
         try {
             Validate(ctx.request.body, this.activityDelRule.rule);
-            const qrcode = await WxClient.createQrCode(ctx.request.body.activityId);
-            await model.Activity.update({
-                qrcode: qrcode,
-            }, {
+            const activity = await model.activity.findOne({
                 where: {
-                    id: ctx.request.body.activityId,
+                    id: ctx.request.body.id,
                 }
-            })
+            });
+            if (!activity) {
+                ctx.body = {
+                    errno: -21,
+                    error: "当前活动不存在",
+                }
+                return
+            }
+
+            if (activity.qrcode) {
+                const qrcode = await WxClient.createQrCode(ctx.request.body.activityId);
+                await model.Activity.update({
+                    qrcode: qrcode,
+                }, {
+                    where: {
+                        id: ctx.request.body.activityId,
+                    }
+                })
+            }
+
+            ctx.body = {
+                errno: 0,
+                error: "",
+                data: activity,
+            }
         } catch (e) {
             console.error(e);
             ctx.body = {
