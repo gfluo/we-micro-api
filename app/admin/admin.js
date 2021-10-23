@@ -319,7 +319,7 @@ class Main {
     activityQrcodeCreate = async (ctx, next) => {
         try {
             Validate(ctx.request.body, this.activityDelRule.rule);
-            const activity = await model.activity.findOne({
+            const activity = await model.Activity.findOne({
                 where: {
                     id: ctx.request.body.activityId,
                 }
