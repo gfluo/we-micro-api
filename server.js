@@ -1,6 +1,8 @@
 const config = require('./config.default');
 const Logger = require("koa-logger");
 const jwtKoa = require('koa-jwt');
+const path = require('path');
+const statics = require('koa-static');
 
 global.config = config
 
@@ -16,10 +18,13 @@ const app = new Koa();
 app.use(logger);
 app.use(cors());
 app.use(jwtKoa({ secret: require('./app/common').jwtSecret }).unless({
-   path: [/^\/admin\/signIn/, /^\/api/] //数组中的路径不需要通过jwt验证
+   path: [/^\/admin\/signIn/, /^\/api/, /^\/images/] //数组中的路径不需要通过jwt验证
 }))
 app.use(xmlParser());
 app.use(bodyParser());
+app.use(statics(
+   path.join(__dirname, './file')
+ ))
 app.use(router.routes());
 app.use(router.allowedMethods());
 app.listen(config.listenPort, () => {

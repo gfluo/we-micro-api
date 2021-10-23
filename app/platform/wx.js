@@ -4,6 +4,9 @@ const uuid = require('uuid');
 const xml2js = require('xml2js');
 const crypto = require('crypto');
 const model = require('../model');
+const redisClient = require('../redis');
+const fs = require('fs');
+const path = require('path');
 
 const APP_KEY = config.wxMicro.appKey;
 const BUSSINESS_ID = config.wxMicro.bussiessId;
@@ -108,6 +111,45 @@ const createSign = (obj) => {
     return newObj;
 }
 
+const getToken = async () => {
+    try {
+        const tokenRedis = await new Promise((resolve, reject) => {
+            redisClient.get('wxToken', (err, token) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve(token);
+            })
+        })
+        if (tokenRedis) {
+            return tokenRedis;
+        }
+        const resp = await request({
+            uri: `https://api.weixin.qq.com/cgi-bin/token`,
+            method: "GET",
+            qs: {
+                grant_type: 'client_credential',
+                appid: APP_KEY,
+                secret: APP_SECRET,
+            }
+        })
+        const respObj = JSON.parse(resp);
+        await new Promise((resolve, reject) => {
+            redisClient.set("wxToken", respObj.access_token, 'ex', 7200, (err) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve();
+            })
+        })
+        return respObj.access_token;
+
+    } catch (e) {
+        console.error(e);
+        throw new Error("wx accessToken create failed");
+    }
+}
+
 exports.auth = async (code) => {
     try {
         const resp = await request({
@@ -128,6 +170,27 @@ exports.auth = async (code) => {
         console.error(e)
         throw new Error("get openId failed");
     }
+}
+
+exports.createQrCode = async (activityId) => {
+    const token = await getToken();
+    const stream = fs.createWriteStream(path.join(__dirname, `../../file/images/qrcode${activityId}.png`))
+    await request({
+        uri: `https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=${token}`,
+        method: 'POST',
+        json: {
+            scene: `id=${activityId}`,
+            path: 'pages/activityDetail/activityDetail'
+        },
+        
+    }).pipe(stream);
+
+    let qrcode = await new Promise((resolve, reject) => {
+        stream.on('finish', () => {
+            resolve(`/images/qrcode${activityId}.png`);
+        })
+    })
+    return qrcode;
 }
 
 exports.createOrder = async (orderInfo) => {

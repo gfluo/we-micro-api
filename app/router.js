@@ -21,6 +21,7 @@ routerApi.post('/admin/activity', admin.Admin.activityCreate);
 routerApi.post('/admin/activity/del', admin.Admin.activityDel);
 routerApi.post('/admin/activity/detail', admin.Admin.activityDetail);
 routerApi.post('/admin/activity/update', admin.Admin.activityUpdate);
+routerApi.post('/admin/qrcode/create', admin.Admin.activityQrcodeCreate);
 
 //notify
 routerApi.post('/api/wxnotify/order/create', api.Wxnotify.createOrder);

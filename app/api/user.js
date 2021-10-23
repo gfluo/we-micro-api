@@ -237,6 +237,10 @@ class User {
             }
         }
     }
+
+    createToken = async (ctx, next) => {
+        WxClient.createQrCode(1);
+    }
 }
 
 module.exports = new User()

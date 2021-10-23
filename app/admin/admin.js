@@ -2,6 +2,7 @@ const Validate = require('request-validate');
 const model = require('../model');
 const jwt = require('jsonwebtoken');
 const moment = require('moment');
+const WxClient = require('../platform/wx');
 
 class Main {
     constructor() {
@@ -311,6 +312,26 @@ class Main {
             ctx.body = {
                 errno: -15,
                 error: "当前活动不存在",
+            }
+        }
+    }
+
+    activityQrcodeCreate = async (ctx, next) => {
+        try {
+            Validate(ctx.request.body, this.activityDelRule.rule);
+            const qrcode = await WxClient.createQrCode(ctx.request.body.activityId);
+            await model.Activity.update({
+                qrcode: qrcode,
+            }, {
+                where: {
+                    id: ctx.request.body.activityId,
+                }
+            })
+        } catch (e) {
+            console.error(e);
+            ctx.body = {
+                errno: -20,
+                error: e.message
             }
         }
     }

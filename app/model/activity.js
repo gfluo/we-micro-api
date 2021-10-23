@@ -44,6 +44,10 @@ const Activity = sequelize.define('activity', {
     cover: {
         field: 'cover',
         type: Sequelize.STRING,
+    },
+    qrcode: {
+        field: 'qrcode',
+        type: Sequelize.STRING,
     }
 }, {
     timestamps: true,
