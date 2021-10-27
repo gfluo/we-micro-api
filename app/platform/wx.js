@@ -180,7 +180,7 @@ exports.createQrCode = async (activityId) => {
         method: 'POST',
         json: {
             scene: `id=${activityId}`,
-            path: 'pages/activityDetail/activityDetail'
+            page: 'pages/activityDetail/activityDetail'
         },
         
     }).pipe(stream);
