@@ -49,6 +49,11 @@ const User = sequelize.define('user', {
         field: 'mobile',
         type: Sequelize.STRING,
         allowNull: true,
+    },
+    intro: {
+        field: 'intro',
+        type: Sequelize.STRING,
+        default: '',
     }
 }, {
     timestamps: true,
