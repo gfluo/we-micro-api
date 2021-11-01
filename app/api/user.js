@@ -238,6 +238,31 @@ class User {
         }
     }
 
+    introSave = async (ctx, next) => {
+        const { openId, intro } = ctx.request.body;
+        let user = await model.User.findOne({
+            openId: openId,
+        })
+
+        if (!user) {
+            ctx.body = {
+                errno: -21,
+                error: '请先注册',
+            };
+            return;
+        }
+
+        user.intro = intro;
+        await user.save();
+        ctx.body = {
+            errno: 0,
+            error: "",
+            data: {
+                ...user.toJSON(),
+            }
+        }
+    }
+
     createToken = async (ctx, next) => {
         WxClient.createQrCode(1);
     }

@@ -11,6 +11,7 @@ routerApi.post('/api/activity/join', api.User.activityJoin);
 routerApi.post('/api/activity/orders', api.User.orders);
 routerApi.post('/api/activities', api.Activity.activities);
 routerApi.post('/api/activity/detail', api.Activity.activityDetail);
+routerApi.post('/api/user/intro/save', api.User.introSave);
 
 //admin
 routerApi.post('/admin/signIn', admin.Admin.signIn);
