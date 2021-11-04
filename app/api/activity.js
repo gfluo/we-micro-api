@@ -7,7 +7,7 @@ class Activity {
     activities = async (ctx, next) => {
         //新增查询功能
         let { query } = ctx.request.body;
-        let filter = query ? { title: { [Op.like]: `%${title}%` }} : {};
+        let filter = query ? { title: { [Op.like]: `%${query}%` }} : {};
 
         let activityAll = await model.Activity.findAndCountAll({
             where: filter,
