@@ -65,6 +65,7 @@ const nonceStr = () => {
 }
 
 const createPaySign = (obj) => {
+    console.log('print payRequest params', obj);
     let tempObj = Object.assign({}, obj);
     let signStr = "";
     let newObj = {};
