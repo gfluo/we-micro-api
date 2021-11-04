@@ -1,9 +1,16 @@
 const model = require('../model');
 const moment = require('moment');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 class Activity {
     activities = async (ctx, next) => {
+        //新增查询功能
+        let { query } = ctx.request.body;
+        let filter = query ? { title: { [Op.like]: `%${title}%` }} : {};
+
         let activityAll = await model.Activity.findAndCountAll({
+            where: filter,
             order: [
                 ['id', 'DESC']  // 逆序
                 // ['id'] 正序
