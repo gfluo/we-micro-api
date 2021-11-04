@@ -196,6 +196,7 @@ exports.createQrCode = async (activityId) => {
 
 exports.createOrder = async (orderInfo) => {
     let { amount, openId, productId, title } = orderInfo;
+    console.log('print orderCreate params');
     const orderData = {
         sign_type: "MD5",
         appid: APP_KEY,
