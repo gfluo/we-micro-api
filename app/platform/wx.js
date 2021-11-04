@@ -221,6 +221,9 @@ exports.createOrder = async (orderInfo) => {
             body: xmlStr,
         });
         let respData = await parseXml(resp);
+
+        console.log('pring createOrder resp result', respData);
+
         //创建订单
         await model.OrderDetail.create({
             openId,
@@ -233,7 +236,6 @@ exports.createOrder = async (orderInfo) => {
             imgSrc: orderInfo.imgSrc,
             title: orderInfo.title,
         })
-
         let uiData = uiPayData(respData, orderData.nonce_str);
         return uiData;
     } catch (e) {
