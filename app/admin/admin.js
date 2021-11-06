@@ -303,6 +303,8 @@ class Main {
             }
         })
         if (activity) {
+            activity.startTime = moment(activity.startTime).format("YYYY-MM-DD HH:mm:ss");
+            activity.endTime = moment(activity.endTime).format("YYYY-MM-DD HH:mm:ss");
             ctx.body = {
                 errno: 0,
                 error: "",
