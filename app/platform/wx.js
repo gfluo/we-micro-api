@@ -65,6 +65,7 @@ const nonceStr = () => {
 }
 
 const createPaySign = (obj) => {
+    console.log('print payRequest params', obj);
     let tempObj = Object.assign({}, obj);
     let signStr = "";
     let newObj = {};
@@ -195,6 +196,8 @@ exports.createQrCode = async (activityId) => {
 
 exports.createOrder = async (orderInfo) => {
     let { amount, openId, productId, title } = orderInfo;
+    amount = Math.ceil(amount);
+    console.log('print orderCreate params', orderInfo);
     const orderData = {
         sign_type: "MD5",
         appid: APP_KEY,
@@ -220,6 +223,9 @@ exports.createOrder = async (orderInfo) => {
             body: xmlStr,
         });
         let respData = await parseXml(resp);
+
+        console.log('pring createOrder resp result', respData);
+
         //创建订单
         await model.OrderDetail.create({
             openId,
@@ -232,7 +238,6 @@ exports.createOrder = async (orderInfo) => {
             imgSrc: orderInfo.imgSrc,
             title: orderInfo.title,
         })
-
         let uiData = uiPayData(respData, orderData.nonce_str);
         return uiData;
     } catch (e) {
