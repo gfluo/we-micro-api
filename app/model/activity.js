@@ -41,6 +41,10 @@ const Activity = sequelize.define('activity', {
         field: 'amount',
         type: Sequelize.INTEGER,
     },
+    amountDescribe: {
+        field: 'amount_describe',
+        type: Sequelize.STRING,
+    },
     cover: {
         field: 'cover',
         type: Sequelize.STRING,
