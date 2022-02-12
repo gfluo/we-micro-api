@@ -13,4 +13,5 @@ module.exports = {
         appSecret: 'ca4c0aa72e75f9fbf7d27337c948bb45',
         apiSecret: 'QWERTYUIOP987654321asdfghjkl1234',
     },
+    domain: 'https://www.szstswh.com'
 }

@@ -18,7 +18,7 @@ const app = new Koa();
 app.use(logger);
 app.use(cors());
 app.use(jwtKoa({ secret: require('./app/common').jwtSecret }).unless({
-   path: [/^\/admin\/signIn/, /^\/api/, /^\/images/] //数组中的路径不需要通过jwt验证
+   path: [/^\/admin\/signIn/, /^\/api/, /^\/images/, /^\/common/, /^\/video/] //数组中的路径不需要通过jwt验证
 }))
 app.use(xmlParser());
 app.use(bodyParser());

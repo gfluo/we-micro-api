@@ -1,6 +1,8 @@
 const Router = require('koa-router');
 const api = require('./api');
 const admin = require('./admin');
+const util = require('./util');
+const config = require('../config.default');
 
 const routerApi = new Router();
 routerApi.post('/api/register', api.User.register);
@@ -24,6 +26,14 @@ routerApi.post('/admin/activity/detail', admin.Admin.activityDetail);
 routerApi.post('/admin/activity/update', admin.Admin.activityUpdate);
 routerApi.post('/admin/qrcode/create', admin.Admin.activityQrcodeCreate);
 
+routerApi.post('/common/video/upload', util.videoUpload.single('file'), async ctx => {
+    ctx.body = {
+        errno: 0,
+        data: {
+            url: `${config.domain}/video/${ctx.file.filename}`
+        }
+    }
+})
 //notify
 routerApi.post('/api/wxnotify/order/create', api.Wxnotify.createOrder);
 
