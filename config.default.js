@@ -1,8 +1,8 @@
 module.exports = {
-    listenPort: 4000,
+    listenPort: 4001,
     db: {
         host: "123.60.8.4",
-        database: 'wx_micro',
+        database: 'wx_micro-second',
         username: 'root',
         password: 'luogf123',
         port: 3306,
