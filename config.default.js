@@ -14,7 +14,7 @@ module.exports = {
         // apiSecret: 'QWERTYUIOP987654321asdfghjkl1234',
         // 凤飞阁
         appKey: 'wx33d2867c2d783db1',
-        bussinessId: '1623417166',
+        bussiessId: '1623417166',
         appSecret: '12a9913992f2cd11523032183f96c3ac',
         apiSecret: 'QWERTYUIOP987654321asdfghjkl1234',
 
