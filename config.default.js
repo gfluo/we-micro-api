@@ -19,5 +19,5 @@ module.exports = {
         apiSecret: 'QWERTYUIOP987654321asdfghjkl1234',
 
     },
-    domain: 'https://www.szstswh.com'
+    domain: 'https://www.szstswh.com/fly'
 }
