@@ -204,7 +204,7 @@ exports.createOrder = async (orderInfo) => {
         mch_id: BUSSINESS_ID,
         nonce_str: nonceStr(),
         device_info: "WEB",
-        body: `腾狮-${title}`,
+        body: `凤飞阁-${title}`,
         out_trade_no: new Date().getTime() + '',    //订单号
         total_fee: amount,
         spbill_create_ip: SERVER_IP,
