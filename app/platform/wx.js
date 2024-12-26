@@ -224,7 +224,7 @@ exports.createOrder = async (orderInfo) => {
         });
         let respData = await parseXml(resp);
 
-        console.log('pring createOrder resp result', respData);
+        console.log('print createOrder resp result', respData);
 
         //创建订单
         await model.OrderDetail.create({
