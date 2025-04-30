@@ -17,41 +17,41 @@ class User {
 
             }
         },
-        this.signInRule = {
-            rule: {
-                openId: `required`,
+            this.signInRule = {
+                rule: {
+                    openId: `required`,
+                }
+            },
+            this.wxCodeRule = {
+                rule: {
+                    code: `required`,
+                }
+            },
+            this.joinConfirmRule = {
+                rule: {
+                    openId: `required`,
+                    amount: `required`,
+                    productId: `required`,
+                }
+            },
+            this.ifJoinRule = {
+                rule: {
+                    openId: `required`,
+                    productId: `required`,
+                }
+            },
+            this.activityJoinRule = {
+                rule: {
+                    openId: `required`,
+                    productId: `required`,
+                    amount: `required`,
+                    title: `required`,
+                    address: `required`,
+                    activityDate: `required`,
+                    imgSrc: `required`,
+                    title: `required`,
+                }
             }
-        },
-        this.wxCodeRule = {
-            rule: {
-                code: `required`,
-            }
-        },
-        this.joinConfirmRule = {
-            rule: {
-                openId: `required`,
-                amount: `required`,
-                productId: `required`,
-            }
-        },
-        this.ifJoinRule = {
-            rule: {
-                openId: `required`,
-                productId: `required`,
-            }
-        },
-        this.activityJoinRule = {
-            rule: {
-                openId: `required`,
-                productId: `required`,
-                amount: `required`,
-                title: `required`,
-                address: `required`,
-                activityDate: `required`,
-                imgSrc: `required`,
-                title: `required`,
-            }
-        }
     }
 
     register = async (ctx, next) => {
@@ -171,6 +171,41 @@ class User {
             console.error(e);
             ctx.body = {
                 errno: -5,
+                error: e.message
+            }
+        }
+    }
+
+    createAdvise = async (ctx, next) => {
+        const { openId, advise } = ctx.request.body;
+        try {
+            let user = await model.User.findOne({
+                where: {
+                    openId: openId
+                }
+            })
+
+            if (!user) {
+                return ctx.body = {
+                    errno: -21,
+                    error: "用户未注册，无法提交建议"
+                }
+            }
+            await model.Advise.create({
+                openId,
+                username: user.username,
+                content: advise,
+            })
+
+            ctx.body = {
+                errno: 0,
+                data: {
+                }
+            }
+        } catch (err) {
+            console.error(e);
+            ctx.body = {
+                errno: -20,
                 error: e.message
             }
         }

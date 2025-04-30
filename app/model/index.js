@@ -3,6 +3,7 @@ const TsOrder = require('./tsOrder');
 const Admin = require('./admin');
 const OrderDetail = require('./orderDetail');
 const Activity = require('./activity');
+const Advise = require('./advise');
 
 //主外键关系绑定
 User.hasMany(TsOrder, {
@@ -18,5 +19,6 @@ module.exports = {
     OrderDetail,
     Admin,
     TsOrder,
-    Activity
+    Activity,
+    Advise,
 }
