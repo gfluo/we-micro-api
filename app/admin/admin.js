@@ -141,6 +141,47 @@ class Main {
         }
     }
 
+
+    getAdvises = async (ctx, next) => {
+        try {
+            let { limit, offset } = ctx.query;
+            if (!limit) {
+                limit = 10;
+            } else {
+                limit = parseInt(limit);
+            }
+            if (!offset) {
+                offset = 0;
+            } else {
+                offset = parseInt(offset);
+            }
+            const advises = await model.Advise.findAndCountAll({
+                limit: limit,
+                offset: offset,
+            })
+
+            advises.rows = advises.rows.map((item) => {
+                item = item.toJSON();
+                return item;
+            })
+
+            ctx.body = {
+                errno: 0,
+                data: {
+                    advises: advises.rows,
+                    total: advises.count,
+                }
+            }
+
+        } catch (e) {
+            ctx.body = {
+                errno: -22,
+                error: e.message
+            }
+        }
+    }
+
+
     activities = async (ctx, next) => {
         try {
             let { limit, offset } = ctx.query;

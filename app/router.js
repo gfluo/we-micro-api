@@ -21,6 +21,7 @@ routerApi.post('/admin/signIn', admin.Admin.signIn);
 routerApi.get('/admin/users', admin.Admin.users);
 routerApi.get('/admin/orders', admin.Admin.orders);
 routerApi.get('/admin/activities', admin.Admin.activities);
+routerApi.get('/admin/advises', admin.Admin.getAdvises);
 routerApi.post('/admin/activity', admin.Admin.activityCreate);
 routerApi.post('/admin/activity/del', admin.Admin.activityDel);
 routerApi.post('/admin/activity/detail', admin.Admin.activityDetail);
