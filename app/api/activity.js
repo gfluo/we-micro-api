@@ -8,6 +8,7 @@ class Activity {
     getActivities = async (ctx, next) => {
         //新增查询功能
         let { query, page, pagesize } = ctx.query;
+        console.log('-------------------------------------------------------------------------------', query, page, pagesize);
         if (!page || !util.isInteger(page) || !pagesize || !util.isInteger(pagesize)) {
             ctx.body = {
                 errno: 0,
