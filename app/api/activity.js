@@ -2,12 +2,56 @@ const model = require('../model');
 const moment = require('moment');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
+const util = require('../util');
 
 class Activity {
+    getActivities = async (ctx, next) => {
+        //新增查询功能
+        let { query, page, pagesize } = ctx.request.body;
+        if (!page || !util.isInteger(page) || !pagesize || !util.isInteger(pagesize)) {
+            ctx.body = {
+                errno: 0,
+                error: "",
+                data: {
+                    activities: []
+                }
+            }
+        }
+
+        page = parseInt(page);
+        pagesize = parseInt(page);
+
+        let filter = query ? { title: { [Op.like]: `%${query}%` } } : {};
+
+        let activityAll = await model.Activity.findAndCountAll({
+            offset: (page -1) * pagesize,
+            limit: pagesize,
+            where: filter,
+            order: [
+                ['id', 'DESC']  // 逆序
+                // ['id'] 正序
+            ]
+        })
+        activityAll.rows = activityAll.rows.map((item => {
+            item = item.toJSON();
+            let period = item.endTime > item.startTime ? item.endTime - item.startTime : 0;
+            item.period = Math.ceil(period / (3600 * 1000)) + '小时';
+            item.startTime = moment(item.startTime).format("YYYY-MM-DD HH:mm:ss");
+            item.amount = item.amount / 100;
+            return item;
+        }))
+        ctx.body = {
+            errno: 0,
+            error: "",
+            data: {
+                activities: activityAll.rows
+            }
+        }
+    }
     activities = async (ctx, next) => {
         //新增查询功能
         let { query } = ctx.request.body;
-        let filter = query ? { title: { [Op.like]: `%${query}%` }} : {};
+        let filter = query ? { title: { [Op.like]: `%${query}%` } } : {};
 
         let activityAll = await model.Activity.findAndCountAll({
             where: filter,
