@@ -7,7 +7,7 @@ const util = require('../util');
 class Activity {
     getActivities = async (ctx, next) => {
         //新增查询功能
-        let { query, page, pagesize } = ctx.request.body;
+        let { query, page, pagesize } = ctx.request.query;
         if (!page || !util.isInteger(page) || !pagesize || !util.isInteger(pagesize)) {
             ctx.body = {
                 errno: 0,
