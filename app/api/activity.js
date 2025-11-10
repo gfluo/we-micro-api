@@ -19,7 +19,7 @@ class Activity {
         }
 
         page = parseInt(page);
-        pagesize = parseInt(page);
+        pagesize = parseInt(pagesize);
 
         let filter = query ? { title: { [Op.like]: `%${query}%` } } : {};
 
