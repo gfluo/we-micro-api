@@ -46,7 +46,8 @@ class Activity {
             errno: 0,
             error: "",
             data: {
-                activities: activityAll.rows
+                activities: activityAll.rows,
+                hasNext: activityAll.count > (page * pagesize)
             }
         }
     }
