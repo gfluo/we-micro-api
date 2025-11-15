@@ -2,6 +2,7 @@ const model = require('../model');
 const moment = require('moment');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
+const util = require('../util');
 
 class Activity {
     getActivities = async (ctx, next) => {
