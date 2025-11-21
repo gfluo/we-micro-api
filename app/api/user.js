@@ -115,6 +115,7 @@ class User {
         try {
             Validate(ctx.request.body, this.signInRule.rule)
             const user = await model.User.findOne({ where: { openId: ctx.request.body.openId } })
+            console.log(user);
             if (user) {
                 ctx.body = {
                     errno: 0,
