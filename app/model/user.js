@@ -54,6 +54,11 @@ const User = sequelize.define('user', {
         field: 'intro',
         type: Sequelize.STRING,
         default: '',
+    },
+    books: {
+        field: 'books',
+        type: Sequelize.STRING,
+        default: '',
     }
 }, {
     timestamps: true,
