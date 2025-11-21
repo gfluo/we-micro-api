@@ -54,6 +54,39 @@ class User {
             }
     }
 
+    saveBooks = async (ctx, next) => {
+        try {
+            const { openId, books } = ctx.request.body;
+            const user = await model.User.findOne({ where: { openId, } });
+            if (user) {
+                await model.User.update({
+                    books,
+                }, {
+                    where: {
+                        id: user.id
+                    }
+                })
+                ctx.body = {
+                    errno: 0,
+                    error: "",
+                    data: {
+
+                    }
+                }
+            } else {
+                ctx.body = {
+                    errno: -4,
+                    error: "保存失败",
+                }
+            }
+        } catch (e) {
+            ctx.body = {
+                errno: -2,
+                error: e.message
+            }
+        }
+    }
+
     register = async (ctx, next) => {
         try {
             Validate(ctx.request.body, this.registerRule.rule);
