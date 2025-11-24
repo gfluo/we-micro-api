@@ -15,6 +15,8 @@ routerApi.post('/api/activities', api.Activity.activities);
 routerApi.get('/api/activities', api.Activity.getActivities);
 routerApi.post('/api/activity/detail', api.Activity.activityDetail);
 routerApi.post('/api/user/intro/save', api.User.introSave);
+routerApi.post('/api/user/advise/create', api.User.createAdvise);
+routerApi.post('/api/user/books/save', api.User.saveBooks);
 
 //admin
 routerApi.post('/admin/signIn', admin.Admin.signIn);

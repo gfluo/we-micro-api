@@ -54,6 +54,39 @@ class User {
         }
     }
 
+    saveBooks = async (ctx, next) => {
+        try {
+            const { openId, books } = ctx.request.body;
+            const user = await model.User.findOne({ where: { openId, } });
+            if (user) {
+                await model.User.update({
+                    books,
+                }, {
+                    where: {
+                        id: user.id
+                    }
+                })
+                ctx.body = {
+                    errno: 0,
+                    error: "",
+                    data: {
+
+                    }
+                }
+            } else {
+                ctx.body = {
+                    errno: -4,
+                    error: "保存失败",
+                }
+            }
+        } catch (e) {
+            ctx.body = {
+                errno: -2,
+                error: e.message
+            }
+        }
+    }
+
     register = async (ctx, next) => {
         try {
             Validate(ctx.request.body, this.registerRule.rule);
@@ -115,7 +148,6 @@ class User {
         try {
             Validate(ctx.request.body, this.signInRule.rule)
             const user = await model.User.findOne({ where: { openId: ctx.request.body.openId } })
-            console.log(user);
             if (user) {
                 ctx.body = {
                     errno: 0,
@@ -172,6 +204,41 @@ class User {
             console.error(e);
             ctx.body = {
                 errno: -5,
+                error: e.message
+            }
+        }
+    }
+
+    createAdvise = async (ctx, next) => {
+        const { openId, advise } = ctx.request.body;
+        try {
+            let user = await model.User.findOne({
+                where: {
+                    openId: openId
+                }
+            })
+
+            if (!user) {
+                return ctx.body = {
+                    errno: -21,
+                    error: "用户未注册，无法提交建议"
+                }
+            }
+            await model.Advise.create({
+                openId,
+                username: user.username,
+                content: advise,
+            })
+
+            ctx.body = {
+                errno: 0,
+                data: {
+                }
+            }
+        } catch (err) {
+            console.error(e);
+            ctx.body = {
+                errno: -20,
                 error: e.message
             }
         }
