@@ -176,41 +176,71 @@ exports.auth = async (code) => {
 exports.createQrCode = async (activityId) => {
     try {
         const token = await getToken();
-        const stream = fs.createWriteStream(path.join(__dirname, `../../file/images/qrcode${activityId}.png`))
-        // await request({
-        //     uri: `https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=${token}`,
-        //     method: 'POST',
-        //     json: {
-        //         scene: `id=${activityId}`,
-        //         page: 'pages/activityDetail/activityDetail'
-        //     },
+        if (!token) throw new Error('获取 access_token 失败');
 
-        // }).pipe(stream);
+        // 路径处理
+        const imgDir = path.join(__dirname, '../../file/images/');
+        const fileName = `qrcode${activityId}.png`;
+        const filePath = path.join(imgDir, fileName);
+
+        // 自动创建目录
+        if (!fs.existsSync(imgDir)) {
+            fs.mkdirSync(imgDir, { recursive: true });
+        }
+
+        // --------------------------
+        // 核心：把 request + stream 完全包装成安全 Promise
+        // 所有错误都会被捕获，不会逃逸
+        // --------------------------
         await new Promise((resolve, reject) => {
-            request({
+            const ws = fs.createWriteStream(filePath);
+
+            // 流错误 → 捕获
+            ws.on('error', (err) => {
+                console.error('写入文件错误:', err);
+                reject(err);
+            });
+
+            const req = request({
                 uri: `https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=${token}`,
                 method: 'POST',
                 json: {
                     scene: `id=${activityId}`,
-                    page: 'pages/activityDetail/activityDetail'
+                    page: 'pages/activityDetail/activityDetail',
+                    check_path: false,
+                },
+                timeout: 10000,
+            });
+
+            // 请求错误 → 捕获
+            req.on('error', (err) => {
+                console.error('请求接口错误:', err);
+                reject(err);
+            });
+
+            // 响应错误（400/500）→ 捕获
+            req.on('response', (res) => {
+                if (res.statusCode < 200 || res.statusCode >= 300) {
+                    const msg = `微信接口返回错误 ${res.statusCode}`;
+                    console.error(msg);
+                    reject(new Error(msg));
                 }
-            })
-                .pipe(stream)
+            });
+
+            // 管道完成
+            req.pipe(ws)
                 .on('finish', resolve)
-                .on('error', reject);
+                .on('close', resolve);
         });
 
-        let qrcode = await new Promise((resolve, reject) => {
-            stream.on('finish', () => {
-                resolve(`/images/qrcode${activityId}.png`);
-            })
-        })
-        return qrcode;
+        return `/images/${fileName}`;
+
     } catch (err) {
-        console.log(err);
-        throw err;
+        // ✅ 现在这里 100% 能抓到所有错误
+        console.error('=== createQrCode 捕获到异常 ===', err.message);
+        return null; // 不抛错，不崩进程
     }
-}
+};
 
 exports.createOrder = async (orderInfo) => {
     let { amount, openId, productId, title } = orderInfo;
