@@ -174,24 +174,42 @@ exports.auth = async (code) => {
 }
 
 exports.createQrCode = async (activityId) => {
-    const token = await getToken();
-    const stream = fs.createWriteStream(path.join(__dirname, `../../file/images/qrcode${activityId}.png`))
-    await request({
-        uri: `https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=${token}`,
-        method: 'POST',
-        json: {
-            scene: `id=${activityId}`,
-            page: 'pages/activityDetail/activityDetail'
-        },
-        
-    }).pipe(stream);
+    try {
+        const token = await getToken();
+        const stream = fs.createWriteStream(path.join(__dirname, `../../file/images/qrcode${activityId}.png`))
+        // await request({
+        //     uri: `https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=${token}`,
+        //     method: 'POST',
+        //     json: {
+        //         scene: `id=${activityId}`,
+        //         page: 'pages/activityDetail/activityDetail'
+        //     },
 
-    let qrcode = await new Promise((resolve, reject) => {
-        stream.on('finish', () => {
-            resolve(`/images/qrcode${activityId}.png`);
+        // }).pipe(stream);
+        await new Promise((resolve, reject) => {
+            request({
+                uri: `https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=${token}`,
+                method: 'POST',
+                json: {
+                    scene: `id=${activityId}`,
+                    page: 'pages/activityDetail/activityDetail'
+                }
+            })
+                .pipe(stream)
+                .on('finish', resolve)
+                .on('error', reject);
+        });
+
+        let qrcode = await new Promise((resolve, reject) => {
+            stream.on('finish', () => {
+                resolve(`/images/qrcode${activityId}.png`);
+            })
         })
-    })
-    return qrcode;
+        return qrcode;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
 }
 
 exports.createOrder = async (orderInfo) => {
