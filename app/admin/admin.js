@@ -198,6 +198,10 @@ class Main {
             const activities = await model.Activity.findAndCountAll({
                 limit: limit,
                 offset: offset,
+                order: [
+                    ['id', 'DESC']  // 逆序
+                    // ['id'] 正序
+                ]
             })
 
             activities.rows = activities.rows.map((item) => {
