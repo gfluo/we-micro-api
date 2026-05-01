@@ -206,7 +206,7 @@ exports.createQrCode = async (activityId) => {
                 method: 'POST',
                 json: {
                     scene: `id=${activityId}`,
-                    page: 'pages/activityDetail/activityDetail',
+                    page: 'src/pages/activitydetail/activitydetail',
                     check_path: false,
                 },
                 timeout: 10000,
