@@ -26,11 +26,12 @@ class Activity {
         let filter = query ? { title: { [Op.like]: `%${query}%` } } : {};
 
         let activityAll = await model.Activity.findAndCountAll({
-            offset: (page -1) * pagesize,
+            offset: (page - 1) * pagesize,
             limit: pagesize,
             where: filter,
             order: [
-                ['id', 'DESC']  // 逆序
+                ['start_time', 'DESC']  // 逆序
+                //['id', 'DESC']  // 逆序
                 // ['id'] 正序
             ]
         })
