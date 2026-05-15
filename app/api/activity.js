@@ -59,7 +59,7 @@ class Activity {
         let activityAll = await model.Activity.findAndCountAll({
             where: filter,
             order: [
-                ['id', 'DESC']  // 逆序
+                ['start_time', 'DESC']  // 逆序
                 // ['id'] 正序
             ]
         })
